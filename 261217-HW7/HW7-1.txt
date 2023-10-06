@@ -1,0 +1,67 @@
+public class BSTree extends BTreePrinter{
+    Node root;
+      
+    public void singleRotateFromLeft(Node y) {
+        Node x = y.left;
+        Node w = y.parent;
+        if (x == null) return;
+        if (w != null) {
+            y.left = x.right;
+            if (y.left != null) y.left.parent = y;
+            x.right = y;
+            y.parent = x;
+            if (w.left == y) w.left = x;
+            else if (w.right == y) w.right = x;
+            x.parent = w;
+        } else {
+            y.left = x.right;
+            if (y.left != null) y.left.parent = y;
+            x.right = y;
+            y.parent = x;
+            root = x;
+            x.parent = null;
+        }
+    }
+
+    public void singleRotateFromRight(Node y) {
+        Node x = y.right;
+        Node w = y.parent;
+        if (x == null) return;
+        if (w != null) {
+            y.right = x.left;
+            if (y.right != null) y.right.parent = y;
+            x.left = y;
+            y.parent = x;
+            if (w.left == y) w.left = x;
+            else if (w.right == y) w.right = x;
+            x.parent = w;
+        } else {
+            y.right = x.left;
+            if (y.right != null) y.left.parent = y;
+            x.left = y;
+            y.parent = x;
+            root = x;
+            x.parent = null;
+        }
+    }
+    
+    public void insert(int key) {
+        if (root == null) {
+            root = new Node(key);
+        } else {
+            Main.insert(root, key);
+        }
+    }
+    
+    public void printTree() {
+        if (root == null) {
+            System.out.println("Empty tree!!!");
+        } else {
+            super.printTree(root);
+        }
+    }
+
+    public Node find(int search_key) {
+        return Main.find(root, search_key);
+    }
+}

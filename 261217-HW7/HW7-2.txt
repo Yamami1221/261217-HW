@@ -1,0 +1,79 @@
+public class BSTree extends BTreePrinter{
+    Node root;
+      
+    public void doubleRotateFromLeft(Node y) {
+        Node w = y.parent;
+        Node x = y.left;
+        if (x == null) return;
+        Node z = x.right;
+        if (z == null) return;
+        x.right = z.left;
+        if (x.right != null) x.right.parent = x;
+        y.left = z.right;
+        if (y.left != null) y.left.parent = y;
+        z.left = x;
+        z.left.parent = z;
+        z.right = y;
+        z.right.parent = z;
+        if (w == null) {
+            root = z;
+            z.parent = null;
+        } else {
+            if (w.left == y) {
+                w.left = z;
+                z.parent = w;
+            } else if (w.right == y) {
+                w.right = z;
+                z.parent = w;
+            }
+        }
+    }
+
+    public void doubleRotateFromRight(Node y) {
+        Node w = y.parent;
+        Node x = y.right;
+        if (x == null) return;
+        Node z = x.left;
+        if (z == null) return;
+        x.left = z.right;
+        if (x.left != null) x.left.parent = x;
+        y.right = z.left;
+        if (y.right != null) y.right.parent = y;
+        z.left = y;
+        z.left.parent = z;
+        z.right = x;
+        z.right.parent = z;
+        if (w == null) {
+            root = z;
+            z.parent = null;
+        } else {
+            if (w.left == y) {
+                w.left = z;
+                z.parent = w;
+            } else if (w.right == y) {
+                w.right = z;
+                z.parent = w;
+            }
+        }
+    }
+    
+    public void insert(int key) {
+        if (root == null) {
+            root = new Node(key);
+        } else {
+            Main.insert(root, key);
+        }
+    }
+    
+    public void printTree() {
+        if (root == null) {
+            System.out.println("Empty tree!!!");
+        } else {
+            super.printTree(root);
+        }
+    }
+
+    public Node find(int search_key) {
+        return Main.find(root, search_key);
+    }
+}

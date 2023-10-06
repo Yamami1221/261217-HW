@@ -1,0 +1,67 @@
+public class BSTree2 extends BTreePrinter{
+    Node root;
+    
+    // Implement this function using iterative method
+    // Do not use recursion
+    public Node find(int search_key){
+        Node current = root;
+        while (current != null) {
+            if (current.key == search_key) return current;
+            else if (current.key > search_key) current = current.left;
+            else current = current.right;
+        }
+        return null;
+    }
+
+    public Node findMin(){
+        Node current = root;
+        while (current.left != null) current = current.left;
+        return current;
+    }
+
+    public Node findMax(){
+        Node current = root;
+        while (current.right != null) current = current.right;
+        return current;
+    }
+
+    public void insert(int key) {
+        if (root == null) {
+            root = new Node(key);
+            return;
+        }
+        Node current = root;
+        while (current.left != null || current.right != null) {
+            if (key > current.key) {
+                if (current.right == null) {
+                    current.right = new Node(key);
+                    return;
+                } else {
+                    current = current.right;
+                }
+            } else if (key < current.key) {
+                if (current.left == null) {
+                    current.left = new Node(key);
+                } else {
+                    current = current.left;
+                }
+            } else {
+                System.out.println("Dup key!!!");
+            }
+        }
+        if (key > current.key) current.right = new Node(key);
+        else if (key < current.key) current.left = new Node(key);
+        else {
+            System.out.println("Dup key!!!");
+        }
+    }
+    
+    // This function is complete, no need to edit
+    public void printTree() {
+        if (root == null) {
+            System.out.println("Empty tree!!!");
+        } else {
+            super.printTree(root);
+        }
+    }
+}
