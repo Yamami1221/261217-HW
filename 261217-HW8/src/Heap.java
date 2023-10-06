@@ -64,89 +64,33 @@ public class Heap {
         int current = 1;
         int left = current * 2;
         int right = (current * 2) + 1;
-        while(left <= size){
-            if (right <= size) {
-                if (arr[left] == null && arr[right] == null) {
-                    break;
-                }
-                if (arr[left] != null && arr[right] == null) {
-                    if (isMinHeap) {
-                        if (arr[left].compare(arr[current])) {
-                            swap(current, left);
-                            current = left;
-                            left = current * 2;
-                            right = (current * 2) + 1;
-                        } else {
-                            break;
-                        }
+        while(arr[left] != null) {
+            if (arr[right] != null) {
+                if (arr[left].compare(arr[right])) {
+                    if (arr[left].compare(arr[current])) {
+                        swap(current, left);
+                        current = left;
                     } else {
-                        if (arr[current].compare(arr[left])) {
-                            swap(current, left);
-                            current = left;
-                            left = current * 2;
-                            right = (current * 2) + 1;
-                        } else {
-                            break;
-                        }
-                    }
-                } else if (arr[left] == null && arr[right] != null) {
-                    if (isMinHeap) {
-                        if (arr[right].compare(arr[current])) {
-                            swap(current, right);
-                            current = right;
-                            left = current * 2;
-                            right = (current * 2) + 1;
-                        } else {
-                            break;
-                        }
-                    } else {
-                        if (arr[current].compare(arr[right])) {
-                            swap(current, right);
-                            current = right;
-                            left = current * 2;
-                            right = (current * 2) + 1;
-                        } else {
-                            break;
-                        }
+                        break;
                     }
                 } else {
-                    if (isMinHeap) {
-                        if (arr[left].compare(arr[current]) || arr[right].compare(arr[current])) {
-                            if (arr[left].compare(arr[right])) {
-                                swap(current, left);
-                                current = left;
-                                left = current * 2;
-                                right = (current * 2) + 1;
-                            } else {
-                                swap(current, right);
-                                current = right;
-                                left = current * 2;
-                                right = (current * 2) + 1;
-                            }
-                        } else {
-                            break;
-                        }
+                    if (arr[right].compare(arr[current])) {
+                        swap(current, right);
+                        current = right;
                     } else {
-                        if (arr[current].compare(arr[left]) || arr[current].compare(arr[right])) {
-                            if (arr[left].compare(arr[right])) {
-                                swap(current, right);
-                                current = right;
-                                left = current * 2;
-                                right = (current * 2) + 1;
-                            } else {
-                                swap(current, left);
-                                current = left;
-                                left = current * 2;
-                                right = (current * 2) + 1;
-                            }
-                        } else {
-                            break;
-                        }
+                        break;
                     }
                 }
             } else {
-                break;
+                if (arr[left].compare(arr[current])) {
+                    swap(current, left);
+                    current = left;
+                } else {
+                    break;
+                }
             }
+            left = current * 2;
+            right = (current * 2) + 1;
         }
         return root;
     }
